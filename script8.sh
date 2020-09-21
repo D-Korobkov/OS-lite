@@ -2,4 +2,4 @@
 
 source=/etc/passwd
 
-cut -d ":" -f3,1 < $source | sort -g -t ":" -k 2
+sort -g -t ":" -k 3 < $source | cut -d ":" -f3,1

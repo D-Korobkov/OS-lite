@@ -5,8 +5,4 @@ destination=info.log
 
 touch $destination
 
-for word in $(cut -d" " -f2 $source)
-do
-read line
-if [[ $word = INFO ]]; then echo $line >> $destination; fi
-done < $source
+awk -F " " '{if ($2 == "INFO") print}' < $source > $destination

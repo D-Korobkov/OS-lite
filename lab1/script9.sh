@@ -2,4 +2,4 @@
 
 source=/var/log/*.log
 
-wc -l $source | awk -F " " '{ SUM += $1 } END {print SUM}'
+wc -l $source | tail -1 | cut -d " " -f3

@@ -16,3 +16,4 @@ awk -v pid=0 -v bytes=0 -F : '{ if ($1 == pid) {print $1":"($2-bytes)}
                                 }
                               }' |
 sort -nrt : -k 2 | head -3 | awk -F : '{getline COM < ("/proc/"$1"/cmdline"); print $1":"COM":"$2}'
+rm buffer

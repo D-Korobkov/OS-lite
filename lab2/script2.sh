@@ -1,4 +1,3 @@
 #!/bin/bash
 
-ps aux | grep -E "* /sbin/" | awk -F " " '{print $2}' > proc_in_sbin
-
+grep --include=cmdline --exclude-dir=task -r "^/sbin" /proc | cut -d " " -f3 | cut -d / -f3

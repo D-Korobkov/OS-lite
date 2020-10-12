@@ -1,4 +1,3 @@
 #!/bin/bash
 
-ps aux | grep -vE "cut|tr|tail|ps|grep|script3" | tail -1 |
-tr -s " " " " | cut -d " " -f2
+ps -ef | awk -v cur_pid=$$ '$3 != cur_pid && $2 != cur_pid { print $2 }' | tail -1

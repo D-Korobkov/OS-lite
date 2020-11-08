@@ -37,7 +37,8 @@ for line in $logData; do
     fileName=$untrashFile
     while [ -f "$dir/$fileName" ]; do
       echo "$fileName already exits, type another name:"
-      read $fileName
+      read fileName
+      echo $fileName
     done
 
     ln "$trashDir/$nameInTrash" "$dir/$fileName"

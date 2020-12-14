@@ -1,0 +1,65 @@
+1)
+md LAB6
+cd LAB6
+
+ver > ver.txt
+mem > mem.txt
+echo list disk | diskpart > diskpart.txt
+
+md TEST
+copy *.txt TEST
+cd TEST
+
+copy *.txt all_data.txt
+
+del ver.txt mem.txt diskpart.txt
+
+2)
+echo %computername%
+md temp
+net share DataShare=c:\LAB6\temp
+
+echo copy /y/z c:\LAB6\heavy_file.txt \\%computername%\DataShare > c:\LAB6\script.bat
+
+schtasks /create /SC MINUTE /TN my /TR c:\LAB6\script.bat
+
+fc c:\LAB6\heavy_file.txt \\%computername%\DataShare\heavy_file.txt
+
+c:\LAB6\script.bat
+
+3)
+net start > net_start.txt
+
+script2.bat
+
+4)
+driverquery /nh /fo table > DRIVERS.txt
+
+sort /r DRIVERS.txt /o sortDRIVERS.txt
+
+
+#script1.bat
+copy /Z c:\LAB6\heavy_file.txt \\%computername%\DataShare
+
+#script2.bat
+net stop dnscache
+timeout /t 10 /nobreak & net start > net_start_1.txt
+fc net_start.txt net_start_1.txt
+net start dnscache
+
+#script3.bat
+schtasks /create /SC MINUTE /TN my_copy /TR "c:\Windows\System32\xcopy.exe /Z c:\LAB6\heavy_file.txt \\%computername%\DataShare"
+
+@:loop
+@tasklist /FI "IMAGENAME eq my_copy" 2>NUL | find /I /N "my_copy">NUL
+@if "%ERRORLEVEL%"=="0" goto :ParseError
+@goto loop
+
+
+@:ParseError
+
+@TASKKILL /IM xcopy
+@fc c:\LAB6\heavy_file.txt \\%computername%\DataShare
+@xcopy /Z c:\LAB6\heavy_file.txt \\%computername%\DataShare
+
+::sleep 100
